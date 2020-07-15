@@ -1,0 +1,6 @@
+[center][img]http://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Cc-by_new_white.svg/25px-Cc-by_new_white.svg.png[/img] [img]http://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Cc-nc_white.svg/25px-Cc-nc_white.svg.png[/img] [img]http://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Cc-sa_white.svg/25px-Cc-sa_white.svg.png[/img][hr][color=red][size=16pt][b]Fancy Features[/b][/size][/color]
+[color=blue][b][size=10pt]By Bugo[/size][/b][/color]
+
+[color=green]Powerful modification which helps to change a lot of interesting options. Fancy for short.[/color]
+[color=red]This mod rejected by SMF Customization Team because it "contains a lot of little modifications into one package" :D[/color]
+Remember: if you don't like this mod, don't use it.[/center][hr]This work is licensed under a [url=https://creativecommons.org/licenses/by-nc-sa/3.0/]CC BY-NC-SA[/url]
