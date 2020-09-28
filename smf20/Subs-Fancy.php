@@ -9,7 +9,7 @@
  * @copyright 2010-2020 Bugo
  * @license https://opensource.org/licenses/MIT MIT
  *
- * @version 1.7.1
+ * @version 1.8
  */
 
 if (!defined('SMF'))
@@ -39,7 +39,7 @@ function fancy_actions(&$actions)
 
 function fancy_load_theme()
 {
-	global $modSettings, $txt;
+	global $modSettings, $txt, $db_show_debug;
 
 	loadLanguage('Fancy');
 
@@ -50,6 +50,26 @@ function fancy_load_theme()
 	// Response Prefix Hide
 	if (!empty($modSettings['fancy_response_prefix']))
 		$txt['response_prefix'] = '';
+
+	// Режим отладки
+	if (!empty($modSettings['fancy_debug_mode'])) {
+		$db_show_debug = true;
+
+		if (!function_exists('debug')) {
+			/**
+			 * Вспомогательная функция для удобного просмотра переменных
+			 *
+			 * @param array $arr
+			 * @return void
+			 */
+			function debug(...$data)
+			{
+				foreach ($data as $var) {
+					echo '<pre>' . print_r($var, true) . '</pre>';
+				}
+			}
+		}
+	}
 }
 
 function fancy_menu_buttons(&$buttons)
@@ -170,7 +190,8 @@ function fancy_settings()
 		array('check', 'fancy_IP_hide'),
 		array('check', 'fancy_button_help'),
 		array('check', 'fancy_button_register'),
-		array('check', 'fancy_hide_signatures')
+		array('check', 'fancy_hide_signatures'),
+		array('check', 'fancy_debug_mode', 'help' => $txt['fancy_debug_mode_help'])
 	);
 
 	// Saving?
@@ -184,5 +205,5 @@ function fancy_settings()
 		redirectexit('action=admin;area=modsettings;sa=fancy_features');
 	}
 
-   	prepareDBSettingContext($config_vars);
+	prepareDBSettingContext($config_vars);
 }

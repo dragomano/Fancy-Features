@@ -21,4 +21,5 @@ $txt['fancy_button_register']    = 'Hide "Register" button';
 $txt['fancy_IP_hide']            = 'Hide "IP" icon and "Logged" label in messages';
 $txt['fancy_hide_signatures']    = 'Hide signatures from guests';
 $txt['fancy_color_groups']       = 'Color of groups in messages matches with the color of groups in Online List';
-$txt['fancy_debug_mode']         = 'Enable debug mode<div class="smalltext">At the bottom of the page, you will see information about database queries. The debug() helper function will also be available for easy viewing of array contents.</div>';
+$txt['fancy_debug_mode']         = 'Enable debug mode';
+$txt['fancy_debug_mode_help']    = 'At the bottom of the page, you will see information about database queries. The debug() helper function will also be available for easy viewing of array contents.';

@@ -9,7 +9,7 @@
  * @copyright 2010-2020 Bugo
  * @license https://opensource.org/licenses/MIT MIT
  *
- * @version 1.7.1
+ * @version 1.8
  */
 
 if (!defined('SMF'))
@@ -66,14 +66,16 @@ function fancy_load_theme()
 
 		if (!function_exists('debug')) {
 			/**
-			 * Вспомогательная функция для удобного просмотра массивов
+			 * Вспомогательная функция для удобного просмотра переменных
 			 *
 			 * @param array $arr
 			 * @return void
 			 */
-			function debug($arr)
+			function debug(...$data)
 			{
-				echo '<pre>' . print_r($arr, true) . '</pre>';
+				foreach ($data as $var) {
+					echo '<pre>' . print_r($var, true) . '</pre>';
+				}
 			}
 		}
 	}
@@ -92,6 +94,9 @@ function fancy_load_theme()
 function fancy_menu_buttons(&$buttons)
 {
 	global $modSettings, $txt, $context, $scripturl, $user_profile;
+
+	// Отключаем блокировку регистрации людей с одного и того же устройства
+	$modSettings['disableRegisterCheck'] = !empty($modSettings['fancy_disable_register_check']);
 
 	// Управление отображением кнопки «Регистрация»
 	if (!empty($modSettings['fancy_hide_register_button'])) {
@@ -265,7 +270,8 @@ function fancy_settings($return_config = false)
 		array('check', 'fancy_hide_ip'),
 		array('check', 'fancy_hide_help_link'),
 		array('check', 'fancy_hide_register_button'),
-		array('check', 'fancy_debug_mode', 'subtext' => $txt['fancy_debug_mode_subtext'])
+		array('check', 'fancy_disable_register_check', 'help' => $txt['fancy_disable_register_check_help']),
+		array('check', 'fancy_debug_mode', 'help' => $txt['fancy_debug_mode_help'])
 	);
 
 	if ($return_config)

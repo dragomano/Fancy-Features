@@ -3,13 +3,13 @@
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
 	<id>Bugo:Fancy</id>
 	<name>Fancy Features</name>
-	<version>1.7.1</version>
+	<version>1.8</version>
 	<type>modification</type>
 
 	<install for="2.0 - 2.0.99">
-		<readme parsebbc="true" lang="russian-utf8">smf20/readme/russian-utf8.txt</readme>
-		<readme parsebbc="true" lang="russian">smf20/readme/russian.txt</readme>
-		<readme parsebbc="true">smf20/readme/english.txt</readme>
+		<readme parsebbc="true" lang="russian-utf8">readme/russian-utf8.txt</readme>
+		<readme parsebbc="true" lang="russian">readme/russian.txt</readme>
+		<readme parsebbc="true">readme/english.txt</readme>
 		<require-file name="smf20/Subs-Fancy.php" destination="$sourcedir" />
 		<require-dir name="smf20/languages" destination="$themedir">Language files</require-dir>
 		<require-dir name="smf20/images" destination="$themedir">ICQ icon</require-dir>
@@ -28,8 +28,8 @@
 	</uninstall>
 
 	<install for="2.1.*">
-		<readme parsebbc="true" lang="russian">smf21/readme/russian.txt</readme>
-		<readme parsebbc="true">smf21/readme/english.txt</readme>
+		<readme parsebbc="true" lang="russian">readme/russian-utf8.txt</readme>
+		<readme parsebbc="true">readme/english.txt</readme>
 		<require-file name="smf21/Subs-Fancy.php" destination="$sourcedir" />
 		<require-dir name="smf21/languages" destination="$themedir">Language files</require-dir>
 		<hook hook="integrate_pre_load" function="fancy_hooks" file="$sourcedir/Subs-Fancy.php" />

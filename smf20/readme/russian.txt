@@ -1,4 +1,0 @@
-[center][img]http://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Cc-by_new_white.svg/25px-Cc-by_new_white.svg.png[/img] [img]http://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Cc-nc_white.svg/25px-Cc-nc_white.svg.png[/img] [img]http://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Cc-sa_white.svg/25px-Cc-sa_white.svg.png[/img][hr][color=red][size=16pt][b]Fancy Features[/b][/size][/color]
-[color=blue][b][size=10pt]By Bugo[/size][/b][/color]
-
-[color=green]Добавление ряда дополнительных параметров настройки форума.[/color][/center][hr]Распространяется по лицензии [url=https://creativecommons.org/licenses/by-nc-sa/3.0/deed.ru]CC BY-NC-SA[/url]
