@@ -1,46 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
-	<id>Bugo:Fancy</id>
+	<id>Bugo:FancyFeatures</id>
 	<name>Fancy Features</name>
-	<version>1.8</version>
+	<version>1.9</version>
 	<type>modification</type>
 
-	<install for="2.0 - 2.0.99">
-		<readme parsebbc="true" lang="russian-utf8">readme/russian-utf8.txt</readme>
+	<install for="2.1.*">
 		<readme parsebbc="true" lang="russian">readme/russian.txt</readme>
 		<readme parsebbc="true">readme/english.txt</readme>
-		<require-file name="smf20/Subs-Fancy.php" destination="$sourcedir" />
-		<require-dir name="smf20/languages" destination="$themedir">Language files</require-dir>
-		<require-dir name="smf20/images" destination="$themedir">ICQ icon</require-dir>
-		<code>hooks.php</code>
-		<redirect url="?action=admin;area=modsettings;sa=fancy_features" timeout="1000" />
-	</install>
-
-	<uninstall for="2.0 - 2.0.99">
-		<code>hooks.php</code>
-		<remove-file name="$languagedir/Fancy.russian.php" />
-		<remove-file name="$languagedir/Fancy.russian-utf8.php" />
-		<remove-file name="$languagedir/Fancy.english.php" />
-		<remove-file name="$themedir/images/icq.gif" />
-		<remove-file name="$sourcedir/Subs-Fancy.php" />
-		<redirect url="?action=admin;area=packages;sa=browse" timeout="1000" />
-	</uninstall>
-
-	<install for="2.1.*">
-		<readme parsebbc="true" lang="russian">readme/russian-utf8.txt</readme>
-		<readme parsebbc="true">readme/english.txt</readme>
-		<require-file name="smf21/Subs-Fancy.php" destination="$sourcedir" />
-		<require-dir name="smf21/languages" destination="$themedir">Language files</require-dir>
-		<hook hook="integrate_pre_load" function="fancy_hooks" file="$sourcedir/Subs-Fancy.php" />
+		<require-dir name="Sources" destination="$boarddir" />
+		<require-dir name="Themes" destination="$boarddir" />
+		<hook hook="integrate_pre_load" function="FancyFeatures::hooks" file="$sourcedir/Class-FancyFeatures.php" />
 		<redirect url="?action=admin;area=modsettings;sa=fancy_features" timeout="1000" />
 	</install>
 
 	<uninstall for="2.1.*">
-		<hook hook="integrate_pre_load" function="fancy_hooks" file="$sourcedir/Subs-Fancy.php" reverse="true" />
-		<remove-file name="$languagedir/Fancy.russian.php" />
-		<remove-file name="$languagedir/Fancy.english.php" />
-		<remove-file name="$sourcedir/Subs-Fancy.php" />
+		<hook hook="integrate_pre_load" function="FancyFeatures::hooks" file="$sourcedir/Class-FancyFeatures.php" reverse="true" />
+		<remove-dir name="$languagedir/FancyFeatures" />
+		<remove-file name="$sourcedir/Class-FancyFeatures.php" />
 		<redirect url="?action=admin;area=packages;sa=browse" timeout="1000" />
 	</uninstall>
 

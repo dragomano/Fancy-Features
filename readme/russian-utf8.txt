@@ -1,4 +1,0 @@
-[center][color=red][size=16pt][b]Fancy Features[/b][/size][/color]
-[color=blue][b][size=10pt]By Bugo[/size][/b][/color]
-
-[color=green]Добавление ряда дополнительных параметров настройки форума.[/color][/center][hr]Распространяется по лицензии [url=https://opensource.org/licenses/MIT]MIT[/url]
