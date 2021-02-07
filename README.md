@@ -5,7 +5,9 @@
 * **Author:** Bugo [dragomano.ru](https://dragomano.ru/mods/fancy-features)
 * **License:** [MIT](https://github.com/dragomano/fancy-features/blob/master/LICENSE)
 * **Compatible with:** SMF 2.1.*
+* **Tested on:** PHP 8.0.1, MariaDB 10.5.6
 * **Hooks only:** Yes
+* **Languages:** English, Russian
 
 ## Description
 Extended settings of SMF
@@ -25,5 +27,4 @@ Extended settings of SMF
 * Скрытие заголовков выбранных основных групп, в сообщениях.
 * Скрытие подписей от гостей.
 * Отключение блокировки регистрации людей с одного и того же устройства.
-* Автоматическое объединение подряд идущих сообщений от одного и того же пользователя.
 * Включение режима отладки.

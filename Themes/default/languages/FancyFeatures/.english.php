@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Fancy.english.php (language file)
+ * .english.php (language file)
  *
  * @package Fancy Features
  * @author Bugo https://dragomano.ru/mods/fancy-features
@@ -23,6 +23,5 @@ $txt['fancy_hide_register_button']        = 'Hide "Register" button';
 $txt['fancy_hide_ip']                     = 'Hide "IP" icon and "Logged" label in messages';
 $txt['fancy_disable_register_check']      = 'Disable blocking people from registering from the same device';
 $txt['fancy_disable_register_check_help'] = 'When this setting is disabled will allow multiple people to register from the same device.';
-$txt['fancy_auto_merge_double_posts']     = 'Automatically merge posts from the same user';
 $txt['fancy_debug_mode']                  = 'Enable debug mode';
 $txt['fancy_debug_mode_help']             = 'At the bottom of the page, you will see information about database queries.';

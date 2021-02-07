@@ -6,10 +6,10 @@
  * @package Fancy Features
  * @link https://dragomano.ru/mods/fancy-features
  * @author Bugo <bugo@dragomano.ru>
- * @copyright 2010-2020 Bugo
+ * @copyright 2010-2021 Bugo
  * @license https://opensource.org/licenses/MIT MIT
  *
- * @version 1.9
+ * @version 1.9.1
  */
 
 if (!defined('SMF'))
@@ -30,7 +30,6 @@ class FancyFeatures
 		add_integration_function('integrate_admin_search', __CLASS__ . '::adminSearch', false, __FILE__);
 		add_integration_function('integrate_modify_modifications', __CLASS__ . '::modifications', false, __FILE__);
 		add_integration_function('integrate_menu_buttons', __CLASS__ . '::menuButtons', false, __FILE__);
-		add_integration_function('integrate_create_post', __CLASS__ . '::createPost', false, __FILE__);
 		add_integration_function('integrate_prepare_display_context', __CLASS__ . '::prepareDisplayContext', false, __FILE__);
 		add_integration_function('integrate_bbc_codes', __CLASS__ . '::bbcCodes', false, __FILE__);
 		add_integration_function('integrate_buffer', __CLASS__ . '::buffer', false, __FILE__);
@@ -131,75 +130,6 @@ class FancyFeatures
 	}
 
 	/**
-	 * Проверяем, принадлежит ли предыдущее сообщение текущему пользователю, и объединяем его с новым
-	 *
-	 * @param array $msgOptions
-	 * @param array $topicOptions
-	 * @param array $posterOptions
-	 * @return void
-	 */
-	public static function createPost(&$msgOptions, &$topicOptions, &$posterOptions)
-	{
-		global $modSettings, $smcFunc, $user_info, $sourcedir;
-
-		if (empty($modSettings['fancy_auto_merge_double_posts']))
-			return;
-
-		$request = $smcFunc['db_query']('', '
-			SELECT t.id_last_msg, m.body
-			FROM {db_prefix}topics AS t
-				INNER JOIN {db_prefix}messages AS m ON (t.id_last_msg = m.id_msg)
-			WHERE t.id_topic = {int:topic}
-				AND t.id_member_updated = {int:user}
-			LIMIT 1',
-			array(
-				'topic' => $topicOptions['id'],
-				'user'  => $posterOptions['id']
-			)
-		);
-
-		list ($id_last_msg, $last_body) = $smcFunc['db_fetch_row']($request);
-
-		$smcFunc['db_free_result']($request);
-
-		if (!empty($id_last_msg) && $posterOptions['id'] == $user_info['id']) {
-			$msgOptions['id'] = $id_last_msg;
-			$msgOptions['body'] = $last_body . '[br][br][size=1][i][time]' . time() . '[/time][/i][/size][br]' . $msgOptions['body'];
-			$msgOptions['modify_time'] = time();
-			$msgOptions['modify_name'] = $user_info['name'];
-			$msgOptions['modify_reason'] = '';
-
-			require_once($sourcedir . '/Subs-Post.php');
-
-			modifyPost($msgOptions, $topicOptions, $posterOptions);
-
-			// Уведомляем подписчиков о новом ответе
-			if (!empty($msgOptions['send_notifications'])) {
-				$smcFunc['db_insert']('',
-					'{db_prefix}background_tasks',
-					array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-					array(
-						'$sourcedir/tasks/CreatePost-Notify.php',
-						'CreatePost_Notify_Background',
-						$smcFunc['json_encode'](
-							array(
-								'msgOptions'    => $msgOptions,
-								'topicOptions'  => $topicOptions,
-								'posterOptions' => $posterOptions,
-								'type'          => 'reply'
-							)
-						),
-						0
-					),
-					array('id_task')
-				);
-			}
-
-			redirectexit('msg=' . $id_last_msg);
-		}
-	}
-
-	/**
 	 * Настраиваем сообщения в соответствии с настройками мода
 	 *
 	 * @param array $output
@@ -210,7 +140,7 @@ class FancyFeatures
 	{
 		global $modSettings;
 
-		if (!empty($modSettings['fancy_highlight_admin_posts']) && $output['member']['group_id'] == 1) {
+		if (!empty($modSettings['fancy_highlight_admin_posts']) && !empty($output['member']['group_id']) && $output['member']['group_id'] == 1) {
 			$output['css_class'] .= ' sticky';
 		}
 
@@ -349,7 +279,6 @@ class FancyFeatures
 			array('check', 'fancy_hide_help_link'),
 			array('check', 'fancy_hide_register_button'),
 			array('check', 'fancy_disable_register_check', 'help' => $txt['fancy_disable_register_check_help']),
-			array('check', 'fancy_auto_merge_double_posts'),
 			array('check', 'fancy_debug_mode', 'help' => $txt['fancy_debug_mode_help'])
 		);
 
