@@ -9,7 +9,7 @@
  * @copyright 2010-2021 Bugo
  * @license https://opensource.org/licenses/MIT MIT
  *
- * @version 1.9.1
+ * @version 1.9.2
  */
 
 if (!defined('SMF'))
@@ -31,7 +31,6 @@ class FancyFeatures
 		add_integration_function('integrate_modify_modifications', __CLASS__ . '::modifications', false, __FILE__);
 		add_integration_function('integrate_menu_buttons', __CLASS__ . '::menuButtons', false, __FILE__);
 		add_integration_function('integrate_prepare_display_context', __CLASS__ . '::prepareDisplayContext', false, __FILE__);
-		add_integration_function('integrate_bbc_codes', __CLASS__ . '::bbcCodes', false, __FILE__);
 		add_integration_function('integrate_buffer', __CLASS__ . '::buffer', false, __FILE__);
 	}
 
@@ -152,28 +151,6 @@ class FancyFeatures
 
 		if (!empty($modSettings['fancy_hide_last_change']) && !empty($output['modified']['time']) && !empty($message['modified_name']) && $message['modified_name'] != $message['poster_name']) {
 			$output['modified']['name'] = '';
-		}
-	}
-
-	/**
-	 * Небольшая правка для тега time
-	 *
-	 * @param array $codes
-	 * @return void
-	 */
-	public static function bbcCodes(&$codes)
-	{
-		foreach ($codes as $tag => $dump) {
-			if ($dump['tag'] == 'time') {
-				$codes[$tag]['validate'] = function(&$tag, &$data, $disabled) {
-					if (is_numeric($data))
-						$data = timeformat($data);
-
-					$tag['content'] = '<strong>$1</strong>';
-				};
-
-				break;
-			}
 		}
 	}
 
