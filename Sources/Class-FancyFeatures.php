@@ -9,7 +9,7 @@
  * @copyright 2010-2021 Bugo
  * @license https://opensource.org/licenses/MIT MIT
  *
- * @version 1.9.2
+ * @version 1.9.3
  */
 
 if (!defined('SMF'))
@@ -32,6 +32,7 @@ class FancyFeatures
 		add_integration_function('integrate_menu_buttons', __CLASS__ . '::menuButtons', false, __FILE__);
 		add_integration_function('integrate_prepare_display_context', __CLASS__ . '::prepareDisplayContext', false, __FILE__);
 		add_integration_function('integrate_buffer', __CLASS__ . '::buffer', false, __FILE__);
+		add_integration_function('integrate_metazones', __CLASS__ . '::metazones', false, __FILE__);
 	}
 
 	/**
@@ -191,6 +192,24 @@ class FancyFeatures
 	}
 
 	/**
+	 * Структурируем часовые пояса для удобного выбора
+	 *
+	 * @param array $tzid_metazones
+	 * @param string $when
+	 * @return void
+	 */
+	public function metazones(&$tzid_metazones, $when)
+	{
+		global $modSettings, $tztxt;
+
+		if (empty($modSettings['fancy_improve_timezone_list']))
+			return;
+
+		$tztxt['generic_timezone'] = '%1$s';
+		$tzid_metazones = array();
+	}
+
+	/**
 	 * Подключаем вкладку с настройками мода в админке
 	 *
 	 * @param array $admin_areas
@@ -236,7 +255,7 @@ class FancyFeatures
 	 */
 	public static function settings($return_config = false)
 	{
-		global $context, $txt, $scripturl;
+		global $context, $txt, $scripturl, $modSettings;
 
 		$context['page_title']     = $txt['fancy'];
 		$context['settings_title'] = $txt['fancy_ext'];
@@ -255,6 +274,7 @@ class FancyFeatures
 			array('check', 'fancy_hide_ip'),
 			array('check', 'fancy_hide_help_link'),
 			array('check', 'fancy_hide_register_button'),
+			array('check', 'fancy_improve_timezone_list', 'help' => $txt['fancy_improve_timezone_list_help'], 'disabled' => empty($modSettings['timezone_priority_countries'])),
 			array('check', 'fancy_disable_register_check', 'help' => $txt['fancy_disable_register_check_help']),
 			array('check', 'fancy_debug_mode', 'help' => $txt['fancy_debug_mode_help'])
 		);
