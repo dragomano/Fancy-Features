@@ -1,12 +1,9 @@
-# Fancy-Features
-![SMF 2.1](https://img.shields.io/badge/SMF-2.1-ed6033.svg?style=flat)
+# Fancy Features
+[![SMF 2.1](https://img.shields.io/badge/SMF-2.1-ed6033.svg?style=flat)](https://github.com/SimpleMachines/SMF2.1)
 ![License](https://img.shields.io/github/license/dragomano/fancy-features)
+![Hooks only: Yes](https://img.shields.io/badge/Hooks%20only-YES-blue)
 
-* **Author:** Bugo [dragomano.ru](https://dragomano.ru/mods/fancy-features)
-* **License:** [MIT](https://github.com/dragomano/fancy-features/blob/master/LICENSE)
-* **Compatible with:** SMF 2.1.*
-* **Tested on:** PHP 7.4.23, MariaDB 10.5.10
-* **Hooks only:** Yes
+* **Tested on:** PHP 7.4.28, MariaDB 10.6.5
 * **Languages:** English, Russian
 
 ## Description
@@ -25,7 +22,6 @@ Extended settings of SMF
 * Hiding signatures from guests.
 * Improved time zone list for easy selection.
 * Disabling the blocking of people registration from the same device.
-* Quick enabling/disabling of the debugging mode.
 
 ## Описание
 Расширенные настройки SMF
@@ -43,4 +39,3 @@ Extended settings of SMF
 * Скрытие подписей от гостей.
 * Улучшение списка часовых поясов для удобного выбора.
 * Отключение блокировки регистрации людей с одного и того же устройства.
-* Включение режима отладки.

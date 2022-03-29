@@ -3,7 +3,7 @@
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
 	<id>Bugo:FancyFeatures</id>
 	<name>Fancy Features</name>
-	<version>1.9.3</version>
+	<version>1.10</version>
 	<type>modification</type>
 
 	<install for="2.1.*">
@@ -11,15 +11,15 @@
 		<readme parsebbc="true">readme/english.txt</readme>
 		<require-dir name="Sources" destination="$boarddir" />
 		<require-dir name="Themes" destination="$boarddir" />
-		<hook hook="integrate_pre_load" function="FancyFeatures::hooks" file="$sourcedir/Class-FancyFeatures.php" />
+		<hook hook="integrate_pre_load" function="FancyFeatures::hooks#" file="$sourcedir/Class-FancyFeatures.php" />
 		<redirect url="?action=admin;area=modsettings;sa=fancy_features" timeout="1000" />
 	</install>
 
 	<uninstall for="2.1.*">
-		<hook hook="integrate_pre_load" function="FancyFeatures::hooks" file="$sourcedir/Class-FancyFeatures.php" reverse="true" />
-		<remove-dir name="$languagedir/FancyFeatures" />
+		<hook hook="integrate_pre_load" function="FancyFeatures::hooks#" file="$sourcedir/Class-FancyFeatures.php" reverse="true" />
+		<remove-file name="$languagedir/FancyFeatures.english.php" />
+		<remove-file name="$languagedir/FancyFeatures.russian.php" />
 		<remove-file name="$sourcedir/Class-FancyFeatures.php" />
-		<redirect url="?action=admin;area=packages;sa=browse" timeout="1000" />
 	</uninstall>
 
 </package-info>

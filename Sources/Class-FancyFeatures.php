@@ -6,42 +6,31 @@
  * @package Fancy Features
  * @link https://dragomano.ru/mods/fancy-features
  * @author Bugo <bugo@dragomano.ru>
- * @copyright 2010-2021 Bugo
+ * @copyright 2010-2022 Bugo
  * @license https://opensource.org/licenses/MIT MIT
  *
- * @version 1.9.3
+ * @version 1.10
  */
 
 if (!defined('SMF'))
-	die('Hacking attempt...');
+	die('No direct access...');
 
-class FancyFeatures
+final class FancyFeatures
 {
-	/**
-	 * Подключаем используемые хуки
-	 *
-	 * @return void
-	 */
-	public static function hooks()
+	public function hooks()
 	{
-		add_integration_function('integrate_actions', __CLASS__ . '::actions', false, __FILE__);
-		add_integration_function('integrate_load_theme', __CLASS__ . '::loadTheme', false, __FILE__);
-		add_integration_function('integrate_admin_areas', __CLASS__ . '::adminAreas', false, __FILE__);
-		add_integration_function('integrate_admin_search', __CLASS__ . '::adminSearch', false, __FILE__);
-		add_integration_function('integrate_modify_modifications', __CLASS__ . '::modifications', false, __FILE__);
-		add_integration_function('integrate_menu_buttons', __CLASS__ . '::menuButtons', false, __FILE__);
-		add_integration_function('integrate_prepare_display_context', __CLASS__ . '::prepareDisplayContext', false, __FILE__);
-		add_integration_function('integrate_buffer', __CLASS__ . '::buffer', false, __FILE__);
-		add_integration_function('integrate_metazones', __CLASS__ . '::metazones', false, __FILE__);
+		add_integration_function('integrate_actions', __CLASS__ . '::actions#', false, __FILE__);
+		add_integration_function('integrate_load_theme', __CLASS__ . '::loadTheme#', false, __FILE__);
+		add_integration_function('integrate_admin_areas', __CLASS__ . '::adminAreas#', false, __FILE__);
+		add_integration_function('integrate_admin_search', __CLASS__ . '::adminSearch#', false, __FILE__);
+		add_integration_function('integrate_modify_modifications', __CLASS__ . '::modifications#', false, __FILE__);
+		add_integration_function('integrate_menu_buttons', __CLASS__ . '::menuButtons#', false, __FILE__);
+		add_integration_function('integrate_prepare_display_context', __CLASS__ . '::prepareDisplayContext#', false, __FILE__);
+		add_integration_function('integrate_buffer', __CLASS__ . '::buffer#', false, __FILE__);
+		add_integration_function('integrate_metazones', __CLASS__ . '::metazones#', false, __FILE__);
 	}
 
-	/**
-	 * Убираем отключенные пункты меню
-	 *
-	 * @param array $actions
-	 * @return void
-	 */
-	public static function actions(&$actions)
+	public function actions(array &$actions)
 	{
 		global $modSettings;
 
@@ -52,64 +41,24 @@ class FancyFeatures
 			unset($actions['signup'], $actions['signup2']);
 	}
 
-	/**
-	 * Подключаем языковой файл, а также некоторые опции
-	 *
-	 * @return void
-	 */
-	public static function loadTheme()
+	public function loadTheme()
 	{
-		global $modSettings, $db_show_debug, $txt;
-
-		loadLanguage('FancyFeatures/');
-
-		// Режим отладки
-		$db_show_debug = !empty($modSettings['fancy_debug_mode']);
+		global $modSettings, $txt;
 
 		// Response Prefix Hide
 		if (!empty($modSettings['fancy_hide_response_prefix']))
 			$txt['response_prefix'] = '';
 	}
 
-	/**
-	 * Подключаем различные фичи
-	 *
-	 * @param array $buttons
-	 * @return void
-	 */
-	public static function menuButtons(&$buttons)
+	public function menuButtons(array &$buttons)
 	{
-		global $modSettings, $txt, $context, $scripturl, $user_profile;
-
-		// Отключаем блокировку регистрации людей с одного и того же устройства
-		$modSettings['disableRegisterCheck'] = !empty($modSettings['fancy_disable_register_check']);
+		global $modSettings, $txt, $user_profile, $context;
 
 		// Управление отображением кнопки «Регистрация»
 		if (!empty($modSettings['fancy_hide_register_button'])) {
 			unset($buttons['signup']);
+
 			$txt['welcome_guest_register'] = $txt['welcome_guest'];
-		}
-
-		// Добавление подпункта «Расширенные настройки» в раскрывающийся список «Админка» в главном меню
-		if ($context['allow_admin']) {
-			$counter = 0;
-			foreach ($buttons['admin']['sub_buttons'] as $area => $dummy) {
-				$counter++;
-				if ($area == 'packages')
-					break;
-			}
-
-			$buttons['admin']['sub_buttons'] = array_merge(
-				array_slice($buttons['admin']['sub_buttons'], 0, $counter, true),
-				array(
-					'modsettings' => array(
-						'title' => isset($txt['fancy_ext']) ? $txt['fancy_ext'] : $txt['settings'],
-						'href'  => $scripturl . '?action=admin;area=modsettings;sa=fancy_features',
-						'show'  => allowedTo('admin_forum')
-					)
-				),
-				array_slice($buttons['admin']['sub_buttons'], $counter, null, true)
-			);
 		}
 
 		if (!empty($_REQUEST['topic']) && !empty($user_profile)) {
@@ -129,14 +78,7 @@ class FancyFeatures
 		}
 	}
 
-	/**
-	 * Настраиваем сообщения в соответствии с настройками мода
-	 *
-	 * @param array $output
-	 * @param array $message
-	 * @return void
-	 */
-	public static function prepareDisplayContext(&$output, &$message)
+	public function prepareDisplayContext(array &$output, array &$message)
 	{
 		global $modSettings;
 
@@ -155,13 +97,7 @@ class FancyFeatures
 		}
 	}
 
-	/**
-	 * Производим некоторые замены в буфере страницы
-	 *
-	 * @param string $buffer
-	 * @return string
-	 */
-	public static function buffer($buffer)
+	public function buffer(string $buffer): string
 	{
 		global $modSettings, $scripturl, $txt;
 
@@ -191,14 +127,7 @@ class FancyFeatures
 		return str_replace(array_keys($replacements), array_values($replacements), $buffer);
 	}
 
-	/**
-	 * Структурируем часовые пояса для удобного выбора
-	 *
-	 * @param array $tzid_metazones
-	 * @param string $when
-	 * @return void
-	 */
-	public function metazones(&$tzid_metazones, $when)
+	public function metazones(array &$tzid_metazones)
 	{
 		global $modSettings, $tztxt;
 
@@ -209,58 +138,40 @@ class FancyFeatures
 		$tzid_metazones = array();
 	}
 
-	/**
-	 * Подключаем вкладку с настройками мода в админке
-	 *
-	 * @param array $admin_areas
-	 * @return void
-	 */
-	public static function adminAreas(&$admin_areas)
+	public function adminAreas(array &$admin_areas)
 	{
 		global $txt;
+
+		loadLanguage('FancyFeatures');
 
 		$admin_areas['config']['areas']['modsettings']['subsections']['fancy_features'] = array($txt['fancy']);
 	}
 
-	/**
-	 * Дополняем быстрый поиск настроек в админке
-	 *
-	 * @param array $language_files
-	 * @param array $include_files
-	 * @param array $settings_search
-	 * @return void
-	 */
-	public static function adminSearch(&$language_files, &$include_files, &$settings_search)
+	public function adminSearch(array &$language_files, array &$include_files, array &$settings_search)
 	{
-		$settings_search[] = array(__CLASS__ . '::settings', 'area=modsettings;sa=fancy_features');
+		$language_files[] = 'FancyFeatures';
+
+		$settings_search[] = array(array($this, 'settings'), 'area=modsettings;sa=fancy_features');
+	}
+
+	public function modifications(array &$subActions)
+	{
+		$subActions['fancy_features'] = array($this, 'settings');
 	}
 
 	/**
-	 * Указываем функцию с настройками мода
-	 *
-	 * @param array $subActions
-	 * @return void
-	 */
-	public static function modifications(&$subActions)
-	{
-		$subActions['fancy_features'] = array(__CLASS__, 'settings');
-	}
-
-	/**
-	 * Выводим настройки мода
-	 *
-	 * @param bool $return_config
-	 *
 	 * @return array|void
 	 */
-	public static function settings($return_config = false)
+	public function settings(bool $return_config = false)
 	{
 		global $context, $txt, $scripturl, $modSettings;
+
+		loadLanguage('FancyFeatures');
 
 		$context['page_title']     = $txt['fancy'];
 		$context['settings_title'] = $txt['fancy_ext'];
 		$context['post_url']       = $scripturl . '?action=admin;area=modsettings;save;sa=fancy_features';
-		$context[$context['admin_menu_name']]['tab_data']['tabs']['fancy_features'] = array('description' => $txt['fancy_desc']);
+		$context[$context['admin_menu_name']]['tab_data']['description'] = $txt['fancy_desc'];
 
 		$config_vars = array(
 			array('check', 'fancy_color_groups'),
@@ -275,8 +186,7 @@ class FancyFeatures
 			array('check', 'fancy_hide_help_link'),
 			array('check', 'fancy_hide_register_button'),
 			array('check', 'fancy_improve_timezone_list', 'help' => $txt['fancy_improve_timezone_list_help'], 'disabled' => empty($modSettings['timezone_priority_countries'])),
-			array('check', 'fancy_disable_register_check', 'help' => $txt['fancy_disable_register_check_help']),
-			array('check', 'fancy_debug_mode', 'help' => $txt['fancy_debug_mode_help'])
+			array('check', 'disableRegisterCheck', 'help' => $txt['fancy_disable_register_check_help']),
 		);
 
 		if ($return_config)
