@@ -6,10 +6,10 @@
  * @package Fancy Features
  * @link https://dragomano.ru/mods/fancy-features
  * @author Bugo <bugo@dragomano.ru>
- * @copyright 2010-2022 Bugo
+ * @copyright 2010-2023 Bugo
  * @license https://opensource.org/licenses/MIT MIT
  *
- * @version 1.10
+ * @version 1.11
  */
 
 if (!defined('SMF'))
@@ -171,7 +171,6 @@ final class FancyFeatures
 		$context['page_title']     = $txt['fancy'];
 		$context['settings_title'] = $txt['fancy_ext'];
 		$context['post_url']       = $scripturl . '?action=admin;area=modsettings;save;sa=fancy_features';
-		$context[$context['admin_menu_name']]['tab_data']['description'] = $txt['fancy_desc'];
 
 		$config_vars = array(
 			array('check', 'fancy_color_groups'),
@@ -187,10 +186,13 @@ final class FancyFeatures
 			array('check', 'fancy_hide_register_button'),
 			array('check', 'fancy_improve_timezone_list', 'help' => $txt['fancy_improve_timezone_list_help'], 'disabled' => empty($modSettings['timezone_priority_countries'])),
 			array('check', 'disableRegisterCheck', 'help' => $txt['fancy_disable_register_check_help']),
+			array('check', 'disable_smf_js')
 		);
 
 		if ($return_config)
 			return $config_vars;
+
+		$context[$context['admin_menu_name']]['tab_data']['description'] = $txt['fancy_desc'];
 
 		// Saving?
 		if (isset($_GET['save'])) {

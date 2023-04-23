@@ -21,5 +21,6 @@ $txt['fancy_hide_register_button']        = 'Hide "Register" button';
 $txt['fancy_hide_ip']                     = 'Hide "Logged" label in messages';
 $txt['disableRegisterCheck']              = 'Disable blocking people from registering from the same device';
 $txt['fancy_disable_register_check_help'] = 'When this setting is disabled will allow multiple people to register from the same device.';
+$txt['disable_smf_js']                    = 'Disable getting news from SMF site';
 $txt['fancy_improve_timezone_list']       = 'Improve the list of time zones for easy selection';
 $txt['fancy_improve_timezone_list_help']  = 'To enable this option, specify the country code in the "Show time zones from these countries first" parameter in the forum general settings.';

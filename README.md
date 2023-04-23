@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/github/license/dragomano/fancy-features)
 ![Hooks only: Yes](https://img.shields.io/badge/Hooks%20only-YES-blue)
 
-* **Tested on:** PHP 7.4.28, MariaDB 10.6.5
+* **Tested on:** PHP 8.0.24, MariaDB 10.6.7
 * **Languages:** English, Russian
 
 ## Description
@@ -22,6 +22,7 @@ Extended settings of SMF
 * Hiding signatures from guests.
 * Improved time zone list for easy selection.
 * Disabling the blocking of people registration from the same device.
+* Disabling news from SMF site.
 
 ## Описание
 Расширенные настройки SMF
@@ -39,3 +40,4 @@ Extended settings of SMF
 * Скрытие подписей от гостей.
 * Улучшение списка часовых поясов для удобного выбора.
 * Отключение блокировки регистрации людей с одного и того же устройства.
+* Отключение новостей с сайта SMF.
